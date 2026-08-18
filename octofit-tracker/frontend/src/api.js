@@ -13,12 +13,16 @@ export function normalizeCollection(payload) {
   return Array.isArray(collection) ? collection : []
 }
 
-export async function fetchCollection(collectionName) {
-  const response = await fetch(`${apiBaseUrl}/${collectionName}/`)
+export async function fetchEndpoint(endpoint) {
+  const response = await fetch(endpoint)
 
   if (!response.ok) {
     throw new Error(`Request failed with ${response.status}`)
   }
 
   return normalizeCollection(await response.json())
+}
+
+export async function fetchCollection(collectionName) {
+  return fetchEndpoint(`${apiBaseUrl}/${collectionName}/`)
 }

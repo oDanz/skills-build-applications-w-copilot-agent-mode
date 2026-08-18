@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection } from '../api'
+import { fetchEndpoint } from '../api'
 import ResourceState from './ResourceState'
+
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const teamsApiUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
 
 function Teams() {
   const [teams, setTeams] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchCollection('teams')
+    fetchEndpoint(teamsApiUrl)
       .then(setTeams)
       .catch((requestError) => setError(requestError.message))
   }, [])
